@@ -1,0 +1,36 @@
+.heading {
+  margin-bottom: 16px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+
+.paid {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.unpaid {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.empty {
+  color: #666;
+  font-size: 14px;
+}

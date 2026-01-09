@@ -1,0 +1,96 @@
+/* AddTenantForm.module.css - FIXED */
+
+/* Form container - matches screenshot compact layout */
+.form {
+  background-color: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.04);
+  border: 1px solid #e5e7eb;
+  margin-bottom: 24px;
+}
+
+.form h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 16px;
+}
+
+/* Grid layout for inputs */
+.formInputGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.form input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  font-size: 15px;
+  color: #111827;
+  outline: none;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  box-sizing: border-box;
+}
+
+.form input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px #dbeafe;
+}
+
+.form input:disabled {
+  background-color: #f9fafb;
+  cursor: not-allowed;
+}
+
+/* Error message */
+.error {
+  background-color: #fef2f2;
+  color: #dc2626;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid #fecaca;
+  font-size: 13px;
+  grid-column: 1 / -1;
+  margin-bottom: 12px;
+}
+
+/* Submit button - full width */
+.form button {
+  width: 100%;
+  grid-column: 1 / -1;
+  padding: 14px 20px;
+  border-radius: 999px;
+  border: none;
+  background-color: #2563eb;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.form button:hover:not(:disabled) {
+  background-color: #1d4ed8;
+  box-shadow: 0 12px 28px rgba(37, 99, 235, 0.3);
+}
+
+.form button:disabled {
+  background-color: #9ca3af;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .formInputGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .form {
+    padding: 20px;
+  }
+}
