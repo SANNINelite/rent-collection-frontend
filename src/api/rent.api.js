@@ -3,10 +3,15 @@ import api from "./axios";
 /* =======================
    MARK RENT AS PAID
 ======================= */
-export const markRentPaid = async (data) => {
-  const response = await api.post("/rent/mark-paid", data);
-  return response.data;
+export const markRentPaid = async ({ rentId, paymentMode }) => {
+  const res = await api.post("/rent/mark-paid", {
+    rentId,
+    paymentDate: new Date().toISOString(),
+    paymentMode,
+  });
+  return res.data;
 };
+
 
 /* =======================
    OWNER: PENDING RENT

@@ -68,20 +68,24 @@ const Dashboard = () => {
     fetchData();
   }, [role, selectedProperty]);
 
-  const handleMarkPaid = async (tenantId, month) => {
-    try {
-      await markRentPaid({ tenantId, month });
-      // Refresh dashboard
-      const updated = pendingRent.filter(
-        r => !(r.tenantId === tenantId && r.month === month)
-      );
-      setPendingRent(updated);
-    } catch (err) {
-      console.log(err)
-      alert("Failed to mark rent as paid");
-    }
-  };
+  const handleMarkPaid = async (rent) => {
+  try {
+    console.log("MARKING PAID:", rent);
 
+    await markRentPaid({
+      rentId: rent._id,
+      paymentMode: "cash",
+    });
+
+    setPendingRent(prev =>
+      prev.filter(r => r._id !== rent._id)
+    );
+
+  } catch (err) {
+    console.log(err.response?.data || err.message);
+    alert("Failed to mark rent as paid");
+  }
+};
   if (role !== "owner") {
     return <p>Welcome to your dashboard.</p>;
   }
@@ -178,7 +182,7 @@ const Dashboard = () => {
                 <button
                   className={styles.payButton}
                   onClick={() =>
-                    handleMarkPaid(r.tenantId, r.month)
+                    handleMarkPaid(r)
                   }
                 >
                   Mark Paid
