@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { getProperties, addProperty, deleteProperty } from "../../api/property.api";
+import {
+  getProperties,
+  addProperty,
+  deleteProperty,
+} from "../../api/property.api";
+import GenerateRentControls from "../../components/Rent/GenerateRentControls";
+import { generateBills } from "../../api/rent.api";
+
 import styles from "./Properties.module.css";
 
 const Properties = () => {
@@ -20,7 +27,7 @@ const Properties = () => {
         const data = await getProperties();
         setProperties(data);
       } catch (err) {
-        console.log(err)
+        console.log(err);
         console.error("Failed to load properties");
       } finally {
         setLoading(false);
@@ -43,7 +50,7 @@ const Properties = () => {
       setAddress("");
       setShowModal(false);
     } catch (err) {
-      console.log(err)
+      console.log(err);
       alert("Failed to add property");
     }
   };
@@ -55,11 +62,9 @@ const Properties = () => {
 
     try {
       await deleteProperty(id);
-      setProperties((prev) =>
-        prev.filter((p) => p._id !== id)
-      );
+      setProperties((prev) => prev.filter((p) => p._id !== id));
     } catch (err) {
-      console.log(err)
+      console.log(err);
       alert("Failed to delete property");
     }
   };
@@ -74,9 +79,7 @@ const Properties = () => {
       <div className={styles.header}>
         <div>
           <h1 className={styles.title}>Properties</h1>
-          <p className={styles.subtitle}>
-            Manage your rental properties
-          </p>
+          <p className={styles.subtitle}>Manage your rental properties</p>
         </div>
 
         <button
@@ -88,6 +91,7 @@ const Properties = () => {
       </div>
 
       {/* ================= PROPERTIES GRID ================= */}
+      <GenerateRentControls properties={properties} />
       <div className={styles.grid}>
         {properties.map((p) => (
           <div key={p._id} className={styles.card}>
@@ -104,9 +108,23 @@ const Properties = () => {
             <p className={styles.address}>{p.address}</p>
 
             <div className={styles.meta}>
-              <span>🏠 {p.units || 0} units</span>
-              <span>👤 {p.tenants || 0} tenants</span>
+              <span>🏠 Property</span>
             </div>
+
+            <button
+              className={styles.generateBtn}
+              onClick={async () => {
+                const month = new Date().toISOString().slice(0, 7);
+                try {
+                  await generateBills({ propertyId: p._id, month });
+                  alert(`Rent generated for ${p.name}`);
+                } catch {
+                  alert("Rent already generated or failed");
+                }
+              }}
+            >
+              Generate Rent For This Property
+            </button>
           </div>
         ))}
       </div>
@@ -127,13 +145,18 @@ const Properties = () => {
 
             <div className={styles.form}>
               <label>Property Name</label>
-              <input placeholder="e.g., Sunset Apartments" />
+              <input
+                placeholder="e.g., Sunset Apartments"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
 
               <label>Address</label>
-              <input placeholder="e.g., 123 Main Street, City" />
-
-              <label>Number of Units</label>
-              <input placeholder="e.g., 10" />
+              <input
+                placeholder="e.g., 123 Main Street, City"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+              />
 
               <div className={styles.modalActions}>
                 <button

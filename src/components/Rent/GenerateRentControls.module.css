@@ -1,0 +1,120 @@
+/* GenerateRentControls.module.css */
+
+.wrapper {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(16px);
+  border-radius: 20px;
+  border: 1px solid rgba(75, 85, 99, 0.4);
+  padding: 2.5rem;
+  margin: 2rem 0;
+}
+
+.controls {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.controls input {
+  flex: 1;
+  min-width: 200px;
+  padding: 1rem 1.3rem;
+  background: rgba(17, 24, 39, 0.95);
+  border: 1px solid rgba(75, 85, 99, 0.5);
+  border-radius: 12px;
+  color: #e5e7eb;
+  font-size: 0.98rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.controls input:focus {
+  outline: none;
+  border-color: #8b5cf6;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+  background: rgba(17, 24, 39, 1);
+}
+
+.controls input::placeholder {
+  color: #6b7280;
+}
+
+.controls button {
+  padding: 1rem 2.2rem;
+  background: linear-gradient(135deg, #8b5cf6, #22d3ee);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 12px 30px rgba(139, 92, 246, 0.4);
+  white-space: nowrap;
+}
+
+.controls button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(139, 92, 246, 0.55);
+}
+
+.controls button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+  background: rgba(139, 92, 246, 0.6);
+}
+
+.msg {
+  margin-top: 1.5rem;
+  padding: 1.2rem 1.5rem;
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 500;
+  font-size: 0.95rem;
+  backdrop-filter: blur(10px);
+}
+
+.msg:empty {
+  display: none;
+}
+
+.msg.success {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.msg.warning {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+}
+
+.msg.error {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+/* RESPONSIVE */
+@media (max-width: 640px) {
+  .wrapper {
+    padding: 2rem 1.5rem;
+    margin: 1.5rem 1rem;
+  }
+
+  .controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .controls input {
+    min-width: auto;
+  }
+
+  .controls button {
+    padding: 1rem;
+  }
+}

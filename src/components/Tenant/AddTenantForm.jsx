@@ -4,6 +4,7 @@ import styles from "./AddTenantForm.module.css";
 
 const AddTenantForm = ({ propertyId, onTenantAdded }) => {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState(""); // ✅ NEW
   const [phone, setPhone] = useState("");
   const [monthlyRent, setMonthlyRent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -18,15 +19,17 @@ const AddTenantForm = ({ propertyId, onTenantAdded }) => {
       await addTenant({
         propertyId,
         name,
+        email, // ✅ REQUIRED
         phone,
-        monthlyRent,
+        monthlyRent: Number(monthlyRent),
       });
 
       setName("");
+      setEmail("");
       setPhone("");
       setMonthlyRent("");
 
-      onTenantAdded(); // refresh tenant list
+      onTenantAdded();
     } catch (err) {
       setError(err.response?.data?.message || "Failed to add tenant");
     } finally {
@@ -37,37 +40,44 @@ const AddTenantForm = ({ propertyId, onTenantAdded }) => {
   return (
     <form onSubmit={handleSubmit} className={styles.form}>
       <h3>Add Tenant</h3>
-      <div className={styles.formInputGrid}>
-        <input
-          type="text"
-          placeholder="Tenant name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-        />
 
-        <input
-          type="text"
-          placeholder="Phone number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          required
-        />
+      <input
+        type="text"
+        placeholder="Tenant Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
 
-        <input
-          type="number"
-          placeholder="Monthly rent"
-          value={monthlyRent}
-          onChange={(e) => setMonthlyRent(e.target.value)}
-          required
-        />
+      <input
+        type="email"
+        placeholder="Tenant Login Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
 
-        {error && <p className={styles.error}>{error}</p>}
+      <input
+        type="text"
+        placeholder="Phone Number"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        required
+      />
 
-        <button type="submit" disabled={loading}>
-          {loading ? "Adding..." : "Add Tenant"}
-        </button>
-      </div>
+      <input
+        type="number"
+        placeholder="Monthly Rent"
+        value={monthlyRent}
+        onChange={(e) => setMonthlyRent(e.target.value)}
+        required
+      />
+
+      {error && <p className={styles.error}>{error}</p>}
+
+      <button type="submit" disabled={loading}>
+        {loading ? "Adding..." : "Add Tenant"}
+      </button>
     </form>
   );
 };
